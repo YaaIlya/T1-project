@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { IPropsLogin } from '../../common/types/auth';
 
 const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
-    const { setpassword, setUserName, isAdmin, handleCheckboxChange, handleRegisterClick } = props;
+    const { setpassword, setUserName, isAdmin, handleCheckboxChange, handleRegisterClick, setAdminPassword } = props;
     return (
         <div >
             <Typography variant="h4" fontFamily='Inter' textAlign='left' marginBottom={3}>Авторизация</Typography>
@@ -21,9 +21,10 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
                     type='password'
                     label="Пароль"
                     variant="outlined"
-                    placeholder='Введите пароль администратора'
+                    placeholder='Введите пароль админа'
                     sx={{ flexGrow: 1 }}
                     disabled={!isAdmin}
+                    onChange={(e) => setAdminPassword(e.target.value)}
                 />
             </Box>
 

@@ -1,14 +1,20 @@
 import Home from './components/home'
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './utils/router/privateRoute';
 import AuthRootComponent from './components/auth';
+import VirtualCard from './components/home';
+import AdminDashboard from './components/admin-dashboard';
 
 function App() {
   return (
     <div className="app">
       <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/home" element={<VirtualCard />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/home" element={<Home />} />
+
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Route>
         <Route path="login" element={<AuthRootComponent />} />
         <Route path="register" element={<AuthRootComponent />} />

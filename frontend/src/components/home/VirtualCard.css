@@ -1,0 +1,173 @@
+.virtual-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: white;
+    box-sizing: border-box;
+    background-image: url("../../media/Screenshot_4.png");
+    background-repeat: no-repeat;
+    background-position: 90% 90%;
+    background-size: 200px 150px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.user-info img.user-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.qr-code {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-details {
+    font-size: 1.1em;
+    color: #333;
+    margin-top: 10px;
+}
+
+.virtual-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-content {
+    margin-bottom: 20px;
+}
+
+.card-number {
+    font-size: 1.4em;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    word-spacing: 4px;
+}
+
+.card-expiry,
+.card-holder {
+    font-size: 1em;
+    color: #666;
+    margin-top: 10px;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+}
+
+.icon-container img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.icon-container img:hover {
+    transform: scale(1.1);
+}
+
+.create-card-button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 600px;
+}
+
+.create-card-button:hover {
+    background-color: #0056b3;
+}
+
+.edit-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.edit-card-container .MuiFormControl-root {
+    margin-bottom: 20px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+
+    .user-info,
+    .virtual-card,
+    .edit-card-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .icon-container {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .user-info img.user-image,
+    .qr-code {
+        width: 80px;
+        height: 80px;
+    }
+
+    .card-number {
+        font-size: 1.2em;
+    }
+
+    .card-expiry,
+    .card-holder {
+        font-size: 0.9em;
+    }
+
+    .icon-container img {
+        width: 20px;
+        height: 20px;
+    }
+}

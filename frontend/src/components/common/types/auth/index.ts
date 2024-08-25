@@ -4,6 +4,7 @@ export interface IPropsLogin {
     isAdmin: boolean;
     handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleRegisterClick: () => void;
+    setAdminPassword: (value: string) => void;
 }
 
 export interface IPropsRegister {
@@ -30,6 +31,7 @@ export interface IPublicUser {
     patronymic: string,
     username: string,
     password: string,
-    email: string
+    email: string,
+    roleOfUser: string
 
 }

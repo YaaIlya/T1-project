@@ -4,7 +4,6 @@ import LoginPage from './login';
 import RegisterPage from './register';
 import './style.scss';
 import { Box } from '@mui/material';
-import { instance } from '../../utils/axios';
 import axios from 'axios';
 import { useAppDispatch } from '../../utils/hook';
 import { login } from '../store/slice/auth';
@@ -21,10 +20,11 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
     const [gender, setGender] = useState<string | undefined>(undefined);
     const [birthDate, setBirthDate] = useState<string | undefined>(undefined);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null); // Состояние для хранения сообщения об ошибке
+    const [adminPassword, setAdminPassword] = useState<string | undefined>(undefined);
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
-
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsAdmin(event.target.checked);
@@ -36,19 +36,37 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if (location.pathname === '/login') {
-            try {
-                const userData = { username, password };
-                const user = await axios.post("http://localhost:8080/auth/login", userData);
-                await dispatch(login(user.data))
-                navigate('/home');
-            } catch (e) {
-                return e
-            }
+        setError(null); // Сбрасываем ошибку перед новым запросом
 
-        } else if (location.pathname === '/register') {
-            if (password === repeatPassword) {
-                try {
+        // Создаем объект с данными пользователя
+        const userData: any = { username, password };
+
+        if (isAdmin) {
+            userData.adminPassword = adminPassword;
+        }
+
+        try {
+            if (location.pathname === '/login') {
+                // Отправляем запрос на сервер для проверки пользователя
+                const response = await axios.post("http://localhost:8080/api/auth/login", userData);
+                const user = response.data;
+
+                // Сохранение токена в localStorage
+                const token = user.Token;
+                localStorage.setItem('token', token);
+
+                await dispatch(login(user));
+
+                // Проверяем, является ли пользователь администратором
+                if (isAdmin && user.isAdmin) {
+                    navigate('/admin-dashboard');
+                } else {
+                    navigate('/home');
+                }
+            } else if (location.pathname === '/register') {
+                // Проверяем совпадение паролей
+                if (password === repeatPassword) {
+                    // Отправляем запрос на сервер для регистрации пользователя
                     const userData = {
                         firstName,
                         surname,
@@ -59,20 +77,26 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
                         birthDate,
                         patronymic
                     };
-                    const newUser = await axios.post("http://localhost:8080/auth/registration", userData);
-                    console.log(newUser.data);
-                    await dispatch(login(newUser.data))
-                    navigate('/home');
-                } catch (e) {
-                    console.log(e)
-                    return e
-                }
+                    const response = await axios.post("http://localhost:8080/api/auth/registration", userData);
+                    const newUser = response.data;
 
-            } else {
-                throw new Error(AppErrors.PasswordDoNotMatch);
+                    // Сохранение токена в localStorage
+                    const token = newUser.token;
+                    localStorage.setItem('token', token);
+
+                    await dispatch(login(newUser));
+                    navigate('/home');
+                } else {
+                    setError(AppErrors.PasswordDoNotMatch);
+                }
             }
+        } catch (e: any) {
+            // Обработка ошибок и установка сообщения об ошибке
+            setError('Неверное имя пользователя или пароль.');
+            console.error(e);
         }
     };
+
 
     return (
         <div className='root'>
@@ -82,9 +106,11 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
                         <LoginPage
                             setUserName={setUserName}
                             setpassword={setpassword}
+                            setAdminPassword={setAdminPassword}
                             isAdmin={isAdmin}
                             handleCheckboxChange={handleCheckboxChange}
                             handleRegisterClick={handleRegisterClick}
+
                         />
                     ) : location.pathname === '/register' ? (
                         <RegisterPage
@@ -99,6 +125,7 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
                             setPatronymic={setPatronymic}
                         />
                     ) : null}
+                    {error && <div className='error-message'>{error}</div>}
                 </Box>
             </form>
         </div>

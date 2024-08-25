@@ -1,0 +1,38 @@
+/* Общие стили */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.AppBar {
+    margin-bottom: 20px;
+}
+
+.Card {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 768px) {
+    .MuiGrid-item {
+        width: 100%;
+    }
+
+    .Card {
+        margin: 10px 0;
+    }
+
+    .MuiButton {
+        font-size: 0.9em;
+    }
+
+    .MuiCardContent-typography {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .MuiCardContent-typography {
+        font-size: 0.8em;
+    }
+}

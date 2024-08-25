@@ -27,8 +27,8 @@ const RegisterPage: React.FC<IPropsRegister> = (props: IPropsRegister): JSX.Elem
                 }}
                 onChange={(e) => setBirthDate(e.target.value)}
             />
-            <FormControl>
-                <FormLabel id="gender-label">Пол</FormLabel>
+            <FormControl sx={{ marginLeft: '350px' }}>
+                <FormLabel id="gender-label" >Пол</FormLabel>
                 <RadioGroup
                     aria-labelledby="gender-label"
                     defaultValue="Мужской"
