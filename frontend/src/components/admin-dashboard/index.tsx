@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import { Person as PersonIcon, Block as BlockIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { fetchUsers, fetchUserCard, updateUserRole, blockUserCard } from './axios';
+import { fetchUsers, fetchUserCard, updateUserRole } from './axios';
 import './AdminDashboard.css';
 
 const AdminDashboard: React.FC = () => {
@@ -76,16 +76,6 @@ const AdminDashboard: React.FC = () => {
         }
     };
 
-    const handleBlockCard = async (cardId: string) => {
-        try {
-            await blockUserCard(cardId);
-            alert(`Карта с номером ${cardId} заблокирована.`);
-        } catch (error) {
-            console.error('Error blocking card:', error);
-            alert('Произошла ошибка при блокировке карты.');
-        }
-    };
-
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/login');
@@ -117,9 +107,6 @@ const AdminDashboard: React.FC = () => {
                                     <CardActions>
                                         <IconButton onClick={(event) => handleOpenMenu(event, user)}>
                                             <PersonIcon />
-                                        </IconButton>
-                                        <IconButton onClick={() => handleBlockCard(user.id)}>
-                                            <BlockIcon />
                                         </IconButton>
                                     </CardActions>
                                 </Card>

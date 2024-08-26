@@ -19,16 +19,11 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
     const [patronymic, setPatronymic] = useState<string | undefined>(undefined);
     const [gender, setGender] = useState<string | undefined>(undefined);
     const [birthDate, setBirthDate] = useState<string | undefined>(undefined);
-    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
     const [error, setError] = useState<string | null>(null); // Состояние для хранения сообщения об ошибке
-    const [adminPassword, setAdminPassword] = useState<string | undefined>(undefined);
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
-
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setIsAdmin(event.target.checked);
-    };
 
     const handleRegisterClick = () => {
         navigate('/register');
@@ -40,10 +35,6 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
 
         // Создаем объект с данными пользователя
         const userData: any = { username, password };
-
-        if (isAdmin) {
-            userData.adminPassword = adminPassword;
-        }
 
         try {
             if (location.pathname === '/login') {
@@ -57,12 +48,13 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
 
                 await dispatch(login(user));
 
+                navigate('/home');
                 // Проверяем, является ли пользователь администратором
-                if (isAdmin && user.isAdmin) {
-                    navigate('/admin-dashboard');
-                } else {
-                    navigate('/home');
-                }
+                // if ( && user.isAdmin) {
+                //     navigate('/admin-dashboard');
+                // } else {
+                //     
+                // }
             } else if (location.pathname === '/register') {
                 // Проверяем совпадение паролей
                 if (password === repeatPassword) {
@@ -106,11 +98,7 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
                         <LoginPage
                             setUserName={setUserName}
                             setpassword={setpassword}
-                            setAdminPassword={setAdminPassword}
-                            isAdmin={isAdmin}
-                            handleCheckboxChange={handleCheckboxChange}
                             handleRegisterClick={handleRegisterClick}
-
                         />
                     ) : location.pathname === '/register' ? (
                         <RegisterPage
@@ -133,3 +121,4 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
 };
 
 export default AuthRootComponent;
+

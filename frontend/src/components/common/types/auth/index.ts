@@ -1,10 +1,7 @@
 export interface IPropsLogin {
     setpassword: (value: string) => void;
     setUserName: (value: string) => void;
-    isAdmin: boolean;
-    handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleRegisterClick: () => void;
-    setAdminPassword: (value: string) => void;
 }
 
 export interface IPropsRegister {

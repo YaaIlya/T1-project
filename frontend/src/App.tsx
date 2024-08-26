@@ -10,10 +10,9 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/home" element={<VirtualCard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route element={<PrivateRoute />}>
-
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Route>
         <Route path="login" element={<AuthRootComponent />} />
